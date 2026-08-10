@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VN HUB — Template Studio</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#07070b;--card:#111117;--border:rgba(255,255,255,.10);--text:#f7f7fb;--muted:#9999a7;--purple:#8b5cf6;--pink:#ec4899;--cyan:#22d3ee;--gradient:linear-gradient(90deg,#8b5cf6,#ec4899,#22d3ee)}
+html{scroll-behavior:smooth} body{background:radial-gradient(circle at 50% -10%,rgba(139,92,246,.16),transparent 35%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;overflow-x:hidden}
+button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+.navbar{height:78px;position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(7,7,11,.82);backdrop-filter:blur(22px);border-bottom:1px solid var(--border)}
+.logo{font-size:27px;font-weight:900;letter-spacing:-1.5px}.logo span{background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;gap:28px}.nav-links a{color:#aaaab8;font-size:14px}.nav-links a:hover{color:white}
+.nav-actions{display:flex;gap:10px}.nav-btn{border:1px solid var(--border);background:#111117;color:white;padding:11px 17px;border-radius:13px}.primary-btn{border:0;background:linear-gradient(135deg,#8b5cf6,#9f4ff4)}
+.hero{min-height:650px;display:flex;align-items:center;justify-content:center;text-align:center;padding:90px 20px 80px;position:relative}.hero-content{max-width:900px;z-index:1}
+.badge{display:inline-flex;padding:10px 17px;border-radius:30px;color:#c3a7ff;border:1px solid rgba(139,92,246,.35);background:rgba(139,92,246,.1);font-size:13px;margin-bottom:28px}
+.hero h1{font-size:clamp(58px,9vw,105px);line-height:.91;letter-spacing:-6px;font-weight:800}.gradient{background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{max-width:690px;margin:32px auto 35px;color:#9999a7;font-size:19px;line-height:1.7}.hero-buttons{display:flex;justify-content:center;gap:13px;flex-wrap:wrap}
+.big-btn{border:0;padding:15px 25px;border-radius:14px;color:white;background:var(--purple);box-shadow:0 12px 40px rgba(139,92,246,.25)}.big-btn.secondary{background:#111117;border:1px solid var(--border);box-shadow:none}
+.section{max-width:1250px;margin:auto;padding:80px 5%}.section-head{text-align:center;margin-bottom:40px}.mini{color:#a78bfa;font-size:13px;text-transform:uppercase;letter-spacing:2px}.section-head h2{font-size:40px;margin:10px 0;letter-spacing:-1.5px}.section-head p{color:#888895;max-width:650px;margin:auto;line-height:1.7}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.feature-card{padding:27px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:22px}.feature-icon{width:50px;height:50px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(236,72,153,.13));font-size:24px;margin-bottom:18px}.feature-card h3{margin-bottom:8px}.feature-card p{color:#858592;line-height:1.6;font-size:14px}
+.search-area{max-width:850px;margin:0 auto 30px}.search-box{display:flex;gap:10px}.search-box input{flex:1;padding:17px 20px;background:#101016;border:1px solid var(--border);color:white;border-radius:15px;outline:none}.search-box button{padding:0 28px;border:0;border-radius:15px;background:var(--purple);color:white}
+.filters{display:flex;gap:12px;overflow-x:auto;padding:3px 2px 15px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}.filter{flex:0 0 auto;padding:12px 20px;border-radius:30px;border:1px solid var(--border);background:#111117;color:#aaaab5}.filter.active,.filter:hover{background:var(--purple);color:white;border-color:transparent}
+.template-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.template-card{overflow:hidden;background:#101016;border:1px solid var(--border);border-radius:23px;transition:.3s}.template-card:hover{transform:translateY(-6px);border-color:rgba(139,92,246,.45)}
+.template-image{height:260px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1a102b,#091827)}.template-image img{width:100%;height:100%;object-fit:cover;display:block}.category{position:absolute;top:13px;left:13px;padding:8px 12px;border-radius:11px;background:rgba(0,0,0,.68);backdrop-filter:blur(10px);font-size:12px}
+.template-info{padding:20px}.template-info h3{font-size:19px;margin-bottom:8px}.template-info p{color:#858591;font-size:13px;line-height:1.55;min-height:40px}.template-bottom{margin-top:17px;display:flex;gap:10px}.view-btn{flex:1;border:0;padding:11px;border-radius:12px;background:rgba(139,92,246,.16);color:#bd9eff}
+.about{display:grid;grid-template-columns:1.1fr .9fr;gap:25px}.about-box{border:1px solid var(--border);background:linear-gradient(145deg,rgba(139,92,246,.1),rgba(255,255,255,.025));border-radius:25px;padding:35px}.about-box h2{font-size:35px;margin-bottom:15px}.about-box p{color:#9696a3;line-height:1.8}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.stat{padding:25px;border:1px solid var(--border);border-radius:20px;background:#101016}.stat strong{display:block;font-size:30px;background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}.stat span{color:#888894;font-size:13px}.socials{display:flex;gap:10px;margin-top:25px}.social{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;border:1px solid var(--border);background:#111117;font-weight:bold}
+footer{border-top:1px solid var(--border);padding:35px 5%;color:#747480;display:flex;justify-content:space-between;gap:20px;max-width:1250px;margin:auto;font-size:13px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);z-index:5000;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box,.dashboard-box{width:min(760px,100%);max-height:92vh;overflow:auto;background:#111117;border:1px solid var(--border);border-radius:25px;padding:25px;box-shadow:0 30px 100px rgba(0,0,0,.6)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}.close{width:38px;height:38px;border:1px solid var(--border);background:#19191f;color:white;border-radius:12px;font-size:18px}
+.detail-image{width:100%;max-height:400px;object-fit:cover;border-radius:18px;margin-bottom:20px}.code-box{margin-top:20px;padding:15px;background:#08080c;border:1px solid var(--border);border-radius:15px;display:flex;gap:10px;align-items:center}.code-box code{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#c7b4ff;font-size:12px}.copy-btn{border:0;padding:9px 13px;border-radius:10px;background:var(--purple);color:white}
+.qr-area{text-align:center;padding:15px}.qr-area img{width:260px;height:260px;max-width:100%;object-fit:contain;border-radius:15px;background:white;padding:10px;cursor:pointer}.qr-hint{color:#777784;font-size:12px;margin-top:10px}
+.dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#9999a6}.field input,.field textarea,.field select{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--border);background:#15151c;color:white;outline:none}.field textarea{min-height:100px;resize:vertical}.upload{padding:15px;border:1px dashed rgba(139,92,246,.45);border-radius:15px;background:rgba(139,92,246,.04)}.upload input{border:0;padding:5px 0;background:transparent}.upload-preview{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}.upload-preview img{width:130px;height:85px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+.dashboard-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.dashboard-actions button{border:0;padding:12px 20px;border-radius:12px;color:white}.cancel{background:#1b1b22}.save{background:var(--purple)}
+.admin-list{margin-top:30px;display:grid;gap:10px}.admin-item{display:flex;align-items:center;gap:13px;padding:12px;background:#14141b;border:1px solid var(--border);border-radius:14px}.admin-item img{width:65px;height:50px;object-fit:cover;border-radius:8px}.admin-item-info{flex:1;min-width:0}.admin-item-info strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.admin-item-info span{color:#777783;font-size:11px}.admin-buttons{display:flex;gap:6px}.admin-buttons button{border:1px solid var(--border);background:#19191f;color:white;border-radius:9px;padding:8px 10px}
+.empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:#777783}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,120px);z-index:9000;background:#17171e;border:1px solid var(--border);color:white;padding:13px 20px;border-radius:13px;box-shadow:0 15px 50px rgba(0,0,0,.45);transition:.3s}.toast.show{transform:translate(-50%,0)}
+.login-box{width:min(400px,100%)}.login-box input{width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:#15151c;color:white;outline:none;margin:12px 0}.login-box button{width:100%;border:0;padding:13px;border-radius:12px;background:var(--purple);color:white}.small-note{font-size:12px;color:#777784;line-height:1.5;margin-top:10px}
+@media(max-width:850px){.nav-links{display:none}.navbar{padding:0 18px}.features{grid-template-columns:1fr}.template-grid{grid-template-columns:repeat(2,1fr)}.about{grid-template-columns:1fr}}
+@media(max-width:600px){.logo{font-size:23px}.nav-btn{padding:9px 12px}.hero{padding:65px 18px 60px}.hero h1{font-size:58px;letter-spacing:-4px}.hero-sub{font-size:15px}.section{padding:65px 18px}.section-head h2{font-size:31px}.search-box{flex-direction:column}.search-box button{height:50px}.template-grid{grid-template-columns:1fr}.dashboard-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.admin-item{align-items:flex-start}.admin-buttons{flex-direction:column}footer{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+<a href="#home" class="logo">VN<span>HUB</span></a>
+<nav class="nav-links"><a href="#home">Home</a><a href="#features">Features</a><a href="#templates">Templates</a><a href="#about">About</a></nav>
+<div class="nav-actions">
+<button class="nav-btn" onclick="openQR()"># QR</button>
+<button class="nav-btn primary-btn" onclick="openAdmin()">Dashboard</button>
+</div>
+</header>
+
+<section class="hero" id="home">
+<div class="hero-content">
+<div class="badge">✦ NEXT GENERATION TEMPLATE HUB</div>
+<h1>Create.<br><span class="gradient">Edit. Inspire.</span></h1>
+<p class="hero-sub">Discover premium VN editing templates, creative video ideas and ready-to-use VN codes — all in one beautiful place.</p>
+<div class="hero-buttons"><a href="#templates" class="big-btn">Explore Templates</a><button class="big-btn secondary" onclick="openQR()">📱 Open QR</button></div>
+</div>
+</section>
+
+<section class="section" id="features">
+<div class="section-head"><div class="mini">WHY VN HUB</div><h2>Everything Creators Need</h2><p>Manage your templates from your own secure dashboard and publish them for everyone.</p></div>
+<div class="features">
+<div class="feature-card"><div class="feature-icon">🎬</div><h3>Premium Templates</h3><p>Add your own preview image, title, category and description.</p></div>
+<div class="feature-card"><div class="feature-icon">📱</div><h3>Real VN QR</h3><p>Upload your actual VN QR screenshot so visitors can open and screenshot it.</p></div>
+<div class="feature-card"><div class="feature-icon">⚡</div><h3>Live Publishing</h3><p>Changes made from your dashboard are stored online and visible to visitors.</p></div>
+</div>
+</section>
+
+<section class="section" id="templates">
+<div class="section-head"><div class="mini">TEMPLATE LIBRARY</div><h2>Explore Templates</h2><p>Search and filter the templates you publish.</p></div>
+<div class="search-area"><div class="search-box"><input id="searchInput" placeholder="Search templates..." oninput="renderTemplates()"><button onclick="renderTemplates()">Search</button></div></div>
+<div class="filters">
+<button class="filter active" onclick="setCategory('All',this)">All</button>
+<button class="filter" onclick="setCategory('Trending',this)">🔥 Trending</button>
+<button class="filter" onclick="setCategory('Cinematic',this)">🎬 Cinematic</button>
+<button class="filter" onclick="setCategory('Beat',this)">🎵 Beat</button>
+<button class="filter" onclick="setCategory('Slow Motion',this)">🌙 Slow Motion</button>
+</div>
+<div class="template-grid" id="templateGrid"></div>
+</section>
+
+<section class="section" id="about">
+<div class="section-head"><div class="mini">ABOUT VN HUB</div><h2>Made For Creative Editors</h2></div>
+<div class="about">
+<div class="about-box">
+<h2>VN<span class="gradient">HUB</span></h2>
+<p>VN HUB is a modern template discovery platform for video editors and content creators. The owner can publish templates, real VN codes, preview images and QR screenshots from the dashboard.</p>
+<div class="socials">
+<a class="social" href="#" aria-label="Instagram">◎</a><a class="social" href="#" aria-label="YouTube">▶</a><a class="social" href="#" aria-label="Telegram">➤</a><a class="social" href="#" aria-label="Facebook">f</a>
+</div>
+</div>
+<div class="stats">
+<div class="stat"><strong id="statTemplates">0</strong><span>Templates</span></div><div class="stat"><strong>24/7</strong><span>Access</span></div><div class="stat"><strong>HD</strong><span>Preview</span></div><div class="stat"><strong>QR</strong><span>VN Ready</span></div>
+</div>
+</div>
+</section>
+
+<footer><div>© 2026 VN HUB. All rights reserved.</div><div>Create • Edit • Inspire</div></footer>
+
+<!-- Login -->
+<div class="modal" id="loginModal">
+<div class="modal-box login-box">
+<div class="modal-head"><div><div class="mini">OWNER ACCESS</div><h2>Dashboard Login</h2></div><button class="close" onclick="closeModal('loginModal')">×</button></div>
+<input id="loginPassword" type="password" placeholder="Admin password" onkeydown="if(event.key==='Enter')login()">
+<button onclick="login()">Login</button>
+<div class="small-note">Your password is checked by the Vercel server. Do not put the password directly into this HTML file.</div>
+</div>
+</div>
+
+<!-- Dashboard -->
+<div class="modal" id="dashboardModal">
+<div class="dashboard-box">
+<div class="modal-head"><div><div class="mini">OWNER DASHBOARD</div><h2>Template Manager</h2></div><button class="close" onclick="closeModal('dashboardModal')">×</button></div>
+
+<form id="templateForm" onsubmit="saveTemplate(event)">
+<input type="hidden" id="editId">
+<div class="dashboard-grid">
+<div class="field"><label>Template Name</label><input id="templateName" required placeholder="Neon Beat Edit"></div>
+<div class="field"><label>Category</label><select id="templateCategory"><option>Trending</option><option>Cinematic</option><option>Beat</option><option>Slow Motion</option></select></div>
+<div class="field full"><label>Description</label><textarea id="templateDescription" placeholder="Write template details..."></textarea></div>
+<div class="field full"><label>VN Code</label><input id="templateCode" required placeholder="Paste the real VN template code"></div>
+
+<div class="field">
+<label>Template / Video Preview Image</label>
+<div class="upload">
+<input type="file" id="templateImage" accept="image/jpeg,image/png,image/webp" onchange="previewFile(this,'imagePreview')">
+<div class="upload-preview" id="imagePreview"></div>
+</div>
+</div>
+
+<div class="field">
+<label>Real VN QR Code Image</label>
+<div class="upload">
+<input type="file" id="templateQR" accept="image/jpeg,image/png,image/webp" onchange="previewFile(this,'qrPreview')">
+<div class="upload-preview" id="qrPreview"></div>
+</div>
+</div>
+</div>
+
+<div class="dashboard-actions"><button type="button" class="cancel" onclick="resetForm()">Clear</button><button type="submit" class="save" id="saveBtn">Save Template</button></div>
+</form>
+
+<div class="admin-list" id="adminList"></div>
+</div>
+</div>
+
+<!-- Detail -->
+<div class="modal" id="detailModal" onclick="outside(event,'detailModal')">
+<div class="modal-box">
+<div class="modal-head"><div><div class="mini">VN TEMPLATE</div><h2 id="detailTitle">Template</h2></div><button class="close" onclick="closeModal('detailModal')">×</button></div>
+<img id="detailImage" class="detail-image" src="" alt="">
+<p id="detailDescription" style="color:#9999a5;line-height:1.7"></p>
+<div class="code-box"><code id="detailCode"></code><button class="copy-btn" onclick="copyCode()">Copy</button></div>
+<div class="qr-area" id="detailQR"></div>
+</div>
+</div>
+
+<!-- QR -->
+<div class="modal" id="qrModal" onclick="outside(event,'qrModal')">
+<div class="modal-box">
+<div class="modal-head"><div><div class="mini">VN QR</div><h2>Select a Template</h2></div><button class="close" onclick="closeModal('qrModal')">×</button></div>
+<div id="qrList"></div>
+</div>
+</div>
+
+<div class="toast" id="toast">Done</div>
+
+<script type="module">
+import { upload } from "https://esm.sh/@vercel/blob@2.0.0/client";
+
+let templates=[];
+let activeCategory="All";
+let currentCode="";
+let loggedIn=false;
+
+const $=id=>document.getElementById(id);
+
+async function api(url,options={}){
+  const r=await fetch(url,{credentials:"same-origin",...options});
+  let data={};
+  try{data=await r.json()}catch{}
+  if(!r.ok) throw new Error(data.error||"Request failed");
+  return data;
+}
+
+async function checkSession(){
+  try{
+    const d=await api("/api/auth");
+    loggedIn=!!d.authenticated;
+  }catch{loggedIn=false}
+}
+
+async function loadTemplates(){
+  try{
+    const d=await api("/api/templates");
+    templates=Array.isArray(d.templates)?d.templates:[];
+  }catch(e){
+    templates=[];
+    toast(e.message);
+  }
+  renderTemplates();
+}
+
+function renderTemplates(){
+  const q=($("searchInput").value||"").toLowerCase().trim();
+  const filtered=templates.filter(t=>{
+    const cat=activeCategory==="All"||t.category===activeCategory;
+    const search=!q||`${t.name} ${t.description} ${t.category}`.toLowerCase().includes(q);
+    return cat&&search;
+  });
+  $("statTemplates").textContent=templates.length;
+  if(!filtered.length){
+    $("templateGrid").innerHTML='<div class="empty"><div style="font-size:42px">📦</div><h3>No templates yet</h3><p>Owner can add the first template from Dashboard.</p></div>';
+    return;
+  }
+  $("templateGrid").innerHTML=filtered.map(t=>`
+    <article class="template-card">
+      <div class="template-image"><img src="${safe(t.image)}" alt="${safe(t.name)}" loading="lazy"><div class="category">${safe(t.category)}</div></div>
+      <div class="template-info"><h3>${safe(t.name)}</h3><p>${safe(t.description||"")}</p>
+      <div class="template-bottom"><button class="view-btn" data-id="${t.id}">View Template</button></div></div>
+    </article>`).join("");
+  document.querySelectorAll(".view-btn").forEach(b=>b.onclick=()=>openDetails(b.dataset.id));
+}
+
+function setCategory(cat,btn){
+  activeCategory=cat;
+  document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  renderTemplates();
+}
+
+function openDetails(id){
+  const t=templates.find(x=>String(x.id)===String(id));
+  if(!t)return;
+  currentCode=t.code||"";
+  $("detailTitle").textContent=t.name;
+  $("detailImage").src=t.image;
+  $("detailDescription").textContent=t.description||"";
+  $("detailCode").textContent=t.code||"";
+  $("detailQR").innerHTML=t.qr?`<img src="${safe(t.qr)}" alt="VN QR" onclick="window.openLargeQR('${jsSafe(t.qr)}')"><div class="qr-hint">Tap QR to enlarge • Screenshot and use in VN</div>`:`<p style="color:#777">No QR image added.</p>`;
+  $("detailModal").classList.add("show");
+}
+
+window.openLargeQR=(src)=>{
+  $("qrList").innerHTML=`<div class="qr-area"><img src="${safe(src)}" style="width:min(500px,90vw);height:auto;max-height:none" alt="VN QR"><div class="qr-hint">Screenshot this QR and use it in the VN app.</div></div>`;
+  $("qrModal").classList.add("show");
+};
+
+function openQR(){
+  if(!templates.length){toast("No templates available.");return}
+  $("qrList").innerHTML=templates.map(t=>`<div style="display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--border);border-radius:14px;margin-bottom:10px"><img src="${safe(t.image)}" style="width:65px;height:50px;object-fit:cover;border-radius:8px"><div style="flex:1"><strong>${safe(t.name)}</strong><div style="color:#777;font-size:12px">${safe(t.category)}</div></div><button class="view-btn" data-qr="${encodeURIComponent(t.qr||"")}">QR</button></div>`).join("");
+  document.querySelectorAll("[data-qr]").forEach(b=>b.onclick=()=>window.openLargeQR(decodeURIComponent(b.dataset.qr)));
+  $("qrModal").classList.add("show");
+}
+
+async function openAdmin(){
+  await checkSession();
+  if(!loggedIn){
+    $("loginPassword").value="";
+    $("loginModal").classList.add("show");
+    setTimeout(()=>$("loginPassword").focus(),100);
+    return;
+  }
+  $("dashboardModal").classList.add("show");
+  renderAdmin();
+}
+
+async function login(){
+  const password=$("loginPassword").value;
+  if(!password){toast("Enter password");return}
+  try{
+    await api("/api/auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password})});
+    loggedIn=true;
+    closeModal("loginModal");
+    $("dashboardModal").classList.add("show");
+    renderAdmin();
+    toast("Dashboard unlocked");
+  }catch(e){toast(e.message)}
+}
+
+async function logout(){
+  try{await api("/api/auth",{method:"DELETE"})}catch{}
+  loggedIn=false;
+  closeModal("dashboardModal");
+  toast("Logged out");
+}
+
+function renderAdmin(){
+  if(!templates.length){
+    $("adminList").innerHTML='<div class="empty">No templates added.</div>';
+    return;
+  }
+  $("adminList").innerHTML=templates.map(t=>`
+    <div class="admin-item">
+      <img src="${safe(t.image)}" alt="">
+      <div class="admin-item-info"><strong>${safe(t.name)}</strong><span>${safe(t.category)}</span></div>
+      <div class="admin-buttons"><button data-edit="${t.id}">Edit</button><button data-delete="${t.id}">Delete</button></div>
+    </div>`).join("");
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editTemplate(b.dataset.edit));
+  document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteTemplate(b.dataset.delete));
+}
+
+function previewFile(input,target){
+  const file=input.files?.[0];
+  if(!file)return;
+  const url=URL.createObjectURL(file);
+  $(target).innerHTML=`<img src="${url}" alt="Preview">`;
+}
+
+async function uploadFile(file){
+  if(!file)return null;
+  if(file.size>50*1024*1024) throw new Error("Image is too large. Keep it under 50MB.");
+  const result=await upload(`vnhub/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g,"_")}`,file,{
+    access:"public",
+    handleUploadUrl:"/api/blob-upload",
+    multipart:file.size>4*1024*1024
+  });
+  return result.url;
+}
+
+async function saveTemplate(e){
+  e.preventDefault();
+  const btn=$("saveBtn");
+  btn.disabled=true; btn.textContent="Uploading...";
+  try{
+    const id=$("editId").value;
+    const old=templates.find(t=>String(t.id)===String(id));
+    const imageFile=$("templateImage").files?.[0];
+    const qrFile=$("templateQR").files?.[0];
+    let image=old?.image||"";
+    let qr=old?.qr||"";
+    if(imageFile) image=await uploadFile(imageFile);
+    if(qrFile) qr=await uploadFile(qrFile);
+    if(!image)throw new Error("Please choose a template image.");
+    if(!qr)throw new Error("Please choose the real VN QR image.");
+    const payload={
+      id:id?Number(id):Date.now(),
+      name:$("templateName").value.trim(),
+      category:$("templateCategory").value,
+      description:$("templateDescription").value.trim(),
+      code:$("templateCode").value.trim(),
+      image,qr
+    };
+    if(!payload.name||!payload.code)throw new Error("Name and VN Code are required.");
+    await api("/api/templates",{method:id?"PUT":"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({template:payload,oldImage:old?.image||null,oldQR:old?.qr||null})});
+    await loadTemplates();
+    renderAdmin();
+    resetForm();
+    toast(id?"Template updated":"Template published");
+  }catch(e){toast(e.message)}
+  finally{btn.disabled=false;btn.textContent="Save Template"}
+}
+
+function editTemplate(id){
+  const t=templates.find(x=>String(x.id)===String(id));if(!t)return;
+  $("editId").value=t.id;$("templateName").value=t.name;$("templateCategory").value=t.category;$("templateDescription").value=t.description||"";$("templateCode").value=t.code||"";
+  $("imagePreview").innerHTML=`<img src="${safe(t.image)}" alt="">`;
+  $("qrPreview").innerHTML=`<img src="${safe(t.qr)}" alt="">`;
+  document.querySelector(".dashboard-box").scrollTo({top:0,behavior:"smooth"});
+}
+
+async function deleteTemplate(id){
+  const t=templates.find(x=>String(x.id)===String(id));if(!t)return;
+  if(!confirm(`Delete "${t.name}"?`))return;
+  try{
+    await api("/api/templates",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:t.id,image:t.image,qr:t.qr})});
+    await loadTemplates();renderAdmin();toast("Template deleted");
+  }catch(e){toast(e.message)}
+}
+
+function resetForm(){
+  $("templateForm").reset();$("editId").value="";$("imagePreview").innerHTML="";$("qrPreview").innerHTML="";
+}
+
+async function copyCode(){
+  try{await navigator.clipboard.writeText(currentCode);toast("VN Code copied")}catch{toast("Copy failed")}
+}
+
+function closeModal(id){$(id).classList.remove("show")}
+function outside(e,id){if(e.target.id===id)closeModal(id)}
+function toast(msg){
+  const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2500);
+}
+function safe(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function jsSafe(v){return String(v??"").replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll("\n","\\n").replaceAll("\r","\\r")}
+
+window.setCategory=setCategory;window.openAdmin=openAdmin;window.openQR=openQR;window.login=login;window.logout=logout;window.resetForm=resetForm;window.closeModal=closeModal;window.outside=outside;window.previewFile=previewFile;window.copyCode=copyCode;window.renderTemplates=renderTemplates;window.openDetails=openDetails;
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"))});
+await checkSession(); await loadTemplates();
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "vnhub-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VN Hub template website with owner dashboard and Vercel Blob storage",
+  "dependencies": {
+    "@vercel/blob": "^2.0.0"
+  }
+}
