@@ -4,6 +4,6 @@
   "private": true,
   "description": "VN Hub template website with owner dashboard and Vercel Blob storage",
   "dependencies": {
-    "@vercel/blob": "^2.6.1"
+    "@vercel/blob": "2.6.1"
   }
 }
