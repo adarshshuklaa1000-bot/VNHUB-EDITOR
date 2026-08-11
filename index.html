@@ -386,8 +386,7 @@ function toast(msg){
 function safe(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 function jsSafe(v){return String(v??"").replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll("\n","\\n").replaceAll("\r","\\r")}
 
-window.setCategory=setCategory;window.openAdmin=openAdmin;window.openQR=openQR;window.login=login;window.logout=logout;window.resetForm=resetForm;window.closeModal=closeModal;window.outside=outside;window.previewFile=previewFile;window.copyCode=copyCode;window.renderTemplates=renderTemplates;window.openDetails=openDetails;
-
+window.setCategory=setCategory;window.openAdmin=openAdmin;window.openQR=openQR;window.login=login;window.logout=logout;window.resetForm=resetForm;window.closeModal=closeModal;window.outside=outside;window.previewFile=previewFile;window.copyCode=copyCode;window.renderTemplates=renderTemplates;window.openDetails=openDetails;window.saveTemplate=saveTemplate;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"))});
 await checkSession(); await loadTemplates();
 </script>
