@@ -37,13 +37,14 @@ export default async function handler(req, res) {
       req.headers["content-type"] || "image/jpeg";
 
     const blob = await put(
-      `vnhub/${Date.now()}-${filename}`,
-      buffer,
-      {
-        access: "public",
-        contentType
-      }
-    );
+  `vnhub/${Date.now()}-${filename}`,
+  buffer,
+  {
+    access: "public",
+    addRandomSuffix: true,
+    contentType
+  }
+);
 
     return res.status(200).json({
       url: blob.url
