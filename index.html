@@ -309,14 +309,28 @@ function previewFile(input,target){
   $(target).innerHTML=`<img src="${url}" alt="Preview">`;
 }
 
-async function uploadFile(file){
-  if(!file)return null;
-  if(file.size>50*1024*1024) throw new Error("Image is too large. Keep it under 50MB.");
-  const result=await upload(`vnhub/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g,"_")}`,file,{
-    access:"public",
-    handleUploadUrl:"/api/blob-upload",
-    multipart:file.size>4*1024*1024
+async function uploadFile(file) {
+  if (!file) return null;
+
+  if (file.size > 50 * 1024 * 1024) {
+    throw new Error("Image is too large. Keep it under 50MB.");
+  }
+
+  const response = await fetch("/api/blob-upload", {
+    method: "POST",
+    headers: {
+      "Content-Type": file.type || "application/octet-stream",
+      "X-File-Name": file.name.replace(/[^a-zA-Z0-9._-]/g, "_")
+    },
+    body: file
   });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || "Upload failed.");
+  }
+
   return result.url;
 }
 
