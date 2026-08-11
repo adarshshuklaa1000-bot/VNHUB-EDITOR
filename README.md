@@ -39,3 +39,4 @@ npx vercel dev
 
 For local Blob/auth behavior, connect the project to Vercel and pull environment variables with:
 vercel env pull .env.local
+VNHUB deployment update
