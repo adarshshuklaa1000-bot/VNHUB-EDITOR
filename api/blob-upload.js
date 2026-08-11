@@ -3,36 +3,57 @@ import { isAuthenticated } from "./auth.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed." });
+    return res.status(405).json({
+      error: "Method not allowed."
+    });
   }
 
   try {
-    const body = typeof req.body === "object" ? req.body : JSON.parse(req.body || "{}");
+    const body =
+      typeof req.body === "object"
+        ? req.body
+        : JSON.parse(req.body || "{}");
 
-    // Blob sends the completion callback without the browser's session cookie.
-    // Token generation itself must be authenticated.
-    const isCompletion = body?.type === "blob.upload-completed";
+    const isCompletion =
+      body?.type === "blob.upload-completed";
+
     if (!isCompletion && !isAuthenticated(req)) {
-      return res.status(401).json({ error: "Login required." });
+      return res.status(401).json({
+        error: "Login required."
+      });
     }
 
     const jsonResponse = await handleUpload({
       body,
       request: req,
-      onBeforeGenerateToken: async () => ({
-        allowedContentTypes: ["image/jpeg", "image/png", "image/webp"],
-        maximumSizeInBytes: 50 * 1024 * 1024,
-        addRandomSuffix: true,
-        validUntil: Date.now() + 15 * 60 * 1000
-      }),
+
+      onBeforeGenerateToken: async () => {
+        return {
+          allowedContentTypes: [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ],
+          maximumSizeInBytes: 50 * 1024 * 1024,
+          addRandomSuffix: true,
+          tokenPayload: JSON.stringify({
+            purpose: "vnhub-template-upload"
+          })
+        };
+      },
+
       onUploadCompleted: async () => {
-        // Metadata is saved by /api/templates after the upload URL is returned.
+        // Template metadata is saved separately.
       }
     });
 
     return res.status(200).json(jsonResponse);
+
   } catch (error) {
-    console.error(error);
-    return res.status(400).json({ error: error?.message || "Upload failed." });
+    console.error("Blob upload error:", error);
+
+    return res.status(500).json({
+      error: error?.message || "Upload failed."
+    });
   }
 }
